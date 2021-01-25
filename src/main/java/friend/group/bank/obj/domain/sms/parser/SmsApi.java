@@ -11,6 +11,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @RequiredArgsConstructor
 public class SmsApi {
@@ -34,19 +36,18 @@ public class SmsApi {
         Gson gson = new Gson();
         StringEntity requestEntity = new StringEntity(gson.toJson(smsDto), ContentType.APPLICATION_JSON);
         httpPost.setEntity(requestEntity);
-        System.out.println(gson.toJson(smsDto));
 
         try(CloseableHttpResponse execute = httpClient.execute(httpPost)) {
             String responseText = EntityUtils.toString(execute.getEntity());
-            System.out.println(responseText);
+            Map<String, String> result = gson.fromJson(responseText, HashMap.class);
+            return result.get("status").equals("0");
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
-
-        return true;
     }
 
-    public Integer getChargeCheck() {
+    public Double getChargeCheck() {
         HttpPost httpPost = new HttpPost(chargeUrl);
         httpPost.setHeader("Cache-Control", "no-cache");
         httpPost.setHeader("Content-Type", "application/json;charset=utf-8");
@@ -57,11 +58,12 @@ public class SmsApi {
         httpPost.setEntity(requestEntity);
         try(CloseableHttpResponse execute = httpClient.execute(httpPost)) {
             String responseText = EntityUtils.toString(execute.getEntity());
+            Map<String, String> result = gson.fromJson(responseText, HashMap.class);
+            return Double.valueOf(result.get("point"));
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
-
-        return null;
     }
 
 }

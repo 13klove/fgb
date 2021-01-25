@@ -1,5 +1,6 @@
 package friend.group.bank.obj.domain.mailLog.entity;
 
+import friend.group.bank.obj.domain.mailLog.status.SmsStatus;
 import friend.group.bank.obj.domain.member.entity.Member;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -28,12 +29,19 @@ public class MailLog {
 
     private String text;
 
+    @Enumerated(EnumType.STRING)
+    private SmsStatus smsStatus;
+
     private LocalDateTime sendDateTime;
 
     protected MailLog(String header, String text, LocalDateTime sendDateTime){
         this.header = header;
         this.text = text;
         this.sendDateTime = sendDateTime;
+    }
+
+    public void sendResult(SmsStatus smsStatus){
+        this.smsStatus = smsStatus;
     }
 
     public static MailLog createMailLog(String header, String text){

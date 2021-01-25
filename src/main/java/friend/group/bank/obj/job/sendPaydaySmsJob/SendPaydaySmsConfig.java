@@ -1,9 +1,11 @@
 package friend.group.bank.obj.job.sendPaydaySmsJob;
 
 import friend.group.bank.obj.domain.member.entity.Member;
+import friend.group.bank.obj.domain.member.repository.MemberJpaRepository;
 import friend.group.bank.obj.job.sendPaydaySmsJob.processor.SendPaydaySmsProcessor;
 import friend.group.bank.obj.job.sendPaydaySmsJob.reader.SendPaydaySmsReader;
 import friend.group.bank.obj.job.sendPaydaySmsJob.writer.SendPaydaySmsWriter;
+import friend.group.bank.obj.util.aes.AES256Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -24,10 +26,12 @@ import javax.persistence.EntityManagerFactory;
 @RequiredArgsConstructor
 public class SendPaydaySmsConfig {
 
+    private final MemberJpaRepository memberJpaRepository;
     private final CloseableHttpClient httpClient;
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
     private final EntityManagerFactory entityManagerFactory;
+    private final AES256Util aes256Util;
 
     private static final int sendPaydaySmsChunk = 10;
 
@@ -45,7 +49,7 @@ public class SendPaydaySmsConfig {
                 .<Member, Member>chunk(sendPaydaySmsChunk)
                 .reader(new SendPaydaySmsReader(entityManagerFactory).sendPaydaySmsReader())
                 .processor(new SendPaydaySmsProcessor())
-                .writer(new SendPaydaySmsWriter(entityManagerFactory, httpClient))
+                .writer(new SendPaydaySmsWriter(entityManagerFactory, httpClient, aes256Util, memberJpaRepository))
                 .build();
     }
 

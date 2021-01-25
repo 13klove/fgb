@@ -5,7 +5,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.batch.item.database.JpaPagingItemReader;
 import org.springframework.batch.item.database.builder.JpaPagingItemReaderBuilder;
 
+
 import javax.persistence.EntityManagerFactory;
+import java.time.LocalDate;
 
 @RequiredArgsConstructor
 public class SendPaydaySmsReader {
@@ -14,8 +16,9 @@ public class SendPaydaySmsReader {
     private static final int sendPaydaySmsPageSize = 10;
 
     public JpaPagingItemReader sendPaydaySmsReader(){
+        String date = Integer.toString(LocalDate.now().getDayOfMonth());
         return new JpaPagingItemReaderBuilder<Member>()
-                .queryString("select m from Member m")
+                .queryString("select m from Member m where m.payday = "+date)
                 .pageSize(sendPaydaySmsPageSize)
                 .entityManagerFactory(entityManagerFactory)
                 .name("sendPaydaySmsReader")

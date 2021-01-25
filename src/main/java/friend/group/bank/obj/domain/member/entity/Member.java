@@ -2,6 +2,7 @@ package friend.group.bank.obj.domain.member.entity;
 
 import com.google.common.collect.Lists;
 import friend.group.bank.obj.domain.mailLog.entity.MailLog;
+import friend.group.bank.obj.domain.member.status.MemberAuthority;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,9 @@ public class Member {
 
     private String payday;
 
+    @Enumerated(EnumType.STRING)
+    private MemberAuthority memberAuthority;
+
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<MailLog> mailLogs = Lists.newArrayList();
 
@@ -34,14 +38,15 @@ public class Member {
         mailLogs.add(mailLog);
     }
 
-    protected Member(String name, String phone, String payday) {
+    protected Member(String name, String phone, String payday, MemberAuthority memberAuthority) {
         this.name = name;
         this.phone = phone;
         this.payday = payday;
+        this.memberAuthority = memberAuthority;
     }
 
-    public static Member createMember(String name, String phone, String payday){
-        return new Member(name, phone, payday);
+    public static Member createMember(String name, String phone, String payday, MemberAuthority memberAuthority){
+        return new Member(name, phone, payday, memberAuthority);
     }
 
 }

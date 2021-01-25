@@ -46,7 +46,7 @@ public class SendPaydaySmsWriter extends JpaItemWriter<MailLog> {
     }
 
     public void cashCheck(SmsApi smsApi){
-        if(smsApi.getChargeCheck() < 1000){
+        if(smsApi.getChargeCheck() < 100){
             Member byMemberAuthority = memberJpaRepository.findByMemberAuthority(MemberAuthority.ADMIN);
             smsApi.sendSms(SmsDto.adminCall(adminHeader, adminText, aes256Util.aesDecode(byMemberAuthority.getPhone())));
         }

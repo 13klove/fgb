@@ -82,4 +82,11 @@ public class SmsTest {
         smsApi.sendSms(SmsDto.userCall("apiTest", "apiTestContext", "*"));
     }
 
+    @Test
+    public void getMoney(){
+        SmsApi smsApi = new SmsApi(httpClient);
+        Double chargeCheck = smsApi.getChargeCheck();
+        System.out.println(chargeCheck);
+    }
+
 }

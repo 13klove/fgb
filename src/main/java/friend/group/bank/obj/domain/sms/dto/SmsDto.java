@@ -23,13 +23,13 @@ public class SmsDto {
 
     private String key;
 
-    private String userName;
+    private String username;
 
     private String type;
 
-    public void smsOption(String userName, String key, String sender){
+    public void smsOption(String username, String key, String sender){
         this.key = key;
-        this.userName = userName;
+        this.username = username;
         this.sender = sender;
         this.type = "java";
     }

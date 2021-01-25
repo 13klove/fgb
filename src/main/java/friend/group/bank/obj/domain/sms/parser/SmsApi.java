@@ -19,9 +19,9 @@ public class SmsApi {
 
     private static final String sendSmsUrl = "https://directsend.co.kr/index.php/api_v2/sms_change_word";
     private static final String chargeUrl = "https://directsend.co.kr/index.php/api_v2/remaining_money";
-    private static final String key = "t40sQYNw7nPHVS2";
-    private static final String userName = "13klove";
-    private static final String sender = "00000000";
+    private static final String key = "*";
+    private static final String userName = "*";
+    private static final String sender = "*";
 
     public Boolean sendSms(SmsDto smsDto) {
         smsDto.smsOption(userName, key, sender);
@@ -38,6 +38,7 @@ public class SmsApi {
 
         try(CloseableHttpResponse execute = httpClient.execute(httpPost)) {
             String responseText = EntityUtils.toString(execute.getEntity());
+            System.out.println(responseText);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -52,7 +53,7 @@ public class SmsApi {
         httpPost.setHeader("Accept", "application/json");
 
         Gson gson = new Gson();
-        StringEntity requestEntity = new StringEntity(gson.toJson(SmsDto.builder().userName(userName).key(key).build()), ContentType.APPLICATION_JSON);
+        StringEntity requestEntity = new StringEntity(gson.toJson(SmsDto.builder().username(userName).key(key).build()), ContentType.APPLICATION_JSON);
         httpPost.setEntity(requestEntity);
         try(CloseableHttpResponse execute = httpClient.execute(httpPost)) {
             String responseText = EntityUtils.toString(execute.getEntity());

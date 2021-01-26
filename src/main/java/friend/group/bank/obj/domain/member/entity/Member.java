@@ -3,6 +3,7 @@ package friend.group.bank.obj.domain.member.entity;
 import com.google.common.collect.Lists;
 import friend.group.bank.obj.domain.mailLog.entity.MailLog;
 import friend.group.bank.obj.domain.member.status.MemberAuthority;
+import friend.group.bank.obj.domain.member.status.PaydayStauts;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,7 +27,10 @@ public class Member {
 
     private String phone;
 
-    private String payday;
+    private Integer payday;
+
+    @Enumerated(EnumType.STRING)
+    private PaydayStauts paydayStauts;
 
     @Enumerated(EnumType.STRING)
     private MemberAuthority memberAuthority;
@@ -38,15 +42,15 @@ public class Member {
         mailLogs.add(mailLog);
     }
 
-    protected Member(String name, String phone, String payday, MemberAuthority memberAuthority) {
+    protected Member(String name, String phone, Integer payday, PaydayStauts paydayStauts, MemberAuthority memberAuthority) {
         this.name = name;
         this.phone = phone;
         this.payday = payday;
         this.memberAuthority = memberAuthority;
     }
 
-    public static Member createMember(String name, String phone, String payday, MemberAuthority memberAuthority){
-        return new Member(name, phone, payday, memberAuthority);
+    public static Member createMember(String name, String phone, Integer payday, PaydayStauts paydayStauts, MemberAuthority memberAuthority){
+        return new Member(name, phone, payday, paydayStauts, memberAuthority);
     }
 
 }

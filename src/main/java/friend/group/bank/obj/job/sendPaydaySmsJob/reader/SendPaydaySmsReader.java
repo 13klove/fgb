@@ -16,7 +16,7 @@ public class SendPaydaySmsReader {
     private static final int sendPaydaySmsPageSize = 10;
 
     public JpaPagingItemReader sendPaydaySmsReader(){
-        String date = Integer.toString(LocalDate.now().getDayOfMonth());
+        Integer date = LocalDate.now().getDayOfMonth();
         return new JpaPagingItemReaderBuilder<Member>()
                 .queryString("select m from Member m where m.payday = "+date)
                 .pageSize(sendPaydaySmsPageSize)

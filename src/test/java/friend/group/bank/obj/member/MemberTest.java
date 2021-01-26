@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import friend.group.bank.obj.domain.member.entity.Member;
 import friend.group.bank.obj.domain.member.repository.MemberJpaRepository;
 import friend.group.bank.obj.domain.member.status.MemberAuthority;
+import friend.group.bank.obj.domain.member.status.PaydayStauts;
 import friend.group.bank.obj.util.aes.AES256Util;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +30,10 @@ public class MemberTest {
     @Rollback(value = false)
     public void insertMember() {
         List<Member> members = Lists.newArrayList();
-        members.add(Member.createMember("hb", aes256Util.aesEncode("123"), "10", MemberAuthority.ADMIN));
-        members.add(Member.createMember("jh", aes256Util.aesEncode("7586"), "25", MemberAuthority.USER));
-        members.add(Member.createMember("sy", aes256Util.aesEncode("789"), "25", MemberAuthority.USER));
-        members.add(Member.createMember("ys", aes256Util.aesEncode("456"), "25", MemberAuthority.USER));
+        members.add(Member.createMember("hb", aes256Util.aesEncode("123"), 10, PaydayStauts.FIX, MemberAuthority.ADMIN));
+        members.add(Member.createMember("jh", aes256Util.aesEncode("7586"), 25, PaydayStauts.FIX, MemberAuthority.USER));
+        members.add(Member.createMember("sy", aes256Util.aesEncode("789"), 15, PaydayStauts.FIX, MemberAuthority.USER));
+        members.add(Member.createMember("ys", aes256Util.aesEncode("456"), 0, PaydayStauts.LAST, MemberAuthority.USER));
         memberJpaRepository.saveAll(members);
         entityManager.flush();
     }

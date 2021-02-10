@@ -30,6 +30,7 @@ public class MemberTest {
     @Rollback(value = false)
     public void insertMember() {
         List<Member> members = Lists.newArrayList();
+
         members.add(Member.createMember("hb", aes256Util.aesEncode("123"), 10, PaydayStauts.FIX, MemberAuthority.ADMIN));
         members.add(Member.createMember("jh", aes256Util.aesEncode("7586"), 25, PaydayStauts.FIX, MemberAuthority.USER));
         members.add(Member.createMember("sy", aes256Util.aesEncode("789"), 15, PaydayStauts.FIX, MemberAuthority.USER));

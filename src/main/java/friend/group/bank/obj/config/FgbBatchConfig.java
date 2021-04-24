@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @RequiredArgsConstructor
-public class FgbBatchConfig { //extends DefaultBatchConfigurer {
+public class FgbBatchConfig  {
 
-    //private final
+    private String name22244444;
 
 }

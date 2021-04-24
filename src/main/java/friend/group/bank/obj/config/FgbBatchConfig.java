@@ -8,6 +8,6 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor
 public class FgbBatchConfig  {
 
-    private String name;
+    private String name22244444;
 
 }
